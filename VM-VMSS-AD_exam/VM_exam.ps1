@@ -24,7 +24,7 @@ $pip = New-AzPublicIpAddress `
   -Location $location `
   -AllocationMethod Static `
   -IdleTimeoutInMinutes 4 `
-  -Name "vm$(Get-Random)"
+  -Name "vm-$(Get-Random)"
 # save pip to file?
 
 # allow ssh
