@@ -8,7 +8,7 @@ New-AzResourceGroup -Name $groupName -Location $location
 # new subnet config
 $subnetConfig = New-AzVirtualNetworkSubnetConfig `
   -Name "vm-subnet" `
-  -AddressPrefix 10.0.1.0/24
+  -AddressPrefix 10.0.0.0/24
 
 # new virtual network
 $vnet = New-AzVirtualNetwork `
