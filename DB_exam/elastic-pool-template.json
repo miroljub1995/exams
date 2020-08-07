@@ -1,0 +1,73 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "poolName": {
+            "type": "string",
+            "metadata": {
+                "description": "The Elastic Pool name."
+            }
+        },
+        "serverName": {
+            "type": "string",
+            "metadata": {
+                "description": "The SQL Server name."
+            }
+        },
+        "edition": {
+            "type": "string",
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Basic",
+                "Standard",
+                "Premium"
+            ],
+            "metadata": {
+                "description": "The Elastic Pool edition."
+            }
+        },
+        "poolDtu": {
+            "type": "int",
+            "defaultValue": 50,
+            "metadata": {
+                "description": "The Elastic Pool DTU."
+            }
+        },
+        "databaseDtuMin": {
+            "type": "int",
+            "defaultValue": 0,
+            "metadata": {
+                "description": "The Elastic Pool database DTU min."
+            }
+        },
+        "databaseDtuMax": {
+            "type": "int",
+            "defaultValue": 50,
+            "metadata": {
+                "description": "The Elastic Pool database DTU max."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all elastic pool."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "name": "[concat(parameters('serverName'), '/', parameters('poolName'))]",
+            "properties": {
+                "edition": "[parameters('edition')]",
+                "dtu": "[parameters('poolDtu')]",
+                "databaseDtuMin": "[parameters('databaseDtuMin')]",
+                "databaseDtuMax": "[parameters('databaseDtuMax')]"
+            },
+            "type": "Microsoft.Sql/servers/elasticPools"
+        }
+    ]
+}
