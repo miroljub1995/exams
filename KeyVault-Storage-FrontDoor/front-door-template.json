@@ -1,0 +1,145 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the frontdoor resource."
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "The location of the frontdoor resource."
+            }
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2020-05-01",
+            "type": "Microsoft.Network/frontdoors",
+            "name": "[parameters('resourceName')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+                "frontdoorId": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend",
+                "friendlyName": "simple-app-frontend",
+                "enabledState": "Enabled",
+                "healthProbeSettings": [
+                    {
+                        "name": "healthProbeSettings-1597135899898",
+                        "properties": {
+                            "path": "/",
+                            "protocol": "Https",
+                            "intervalInSeconds": 30,
+                            "healthProbeMethod": "Head",
+                            "enabledState": "Enabled"
+                        },
+                        "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/healthProbeSettings/healthProbeSettings-1597135899898"
+                    }
+                ],
+                "loadBalancingSettings": [
+                    {
+                        "name": "loadBalancingSettings-1597135899898",
+                        "properties": {
+                            "sampleSize": 4,
+                            "successfulSamplesRequired": 2,
+                            "additionalLatencyMilliseconds": 0
+                        },
+                        "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/loadBalancingSettings/loadBalancingSettings-1597135899898"
+                    }
+                ],
+                "frontendEndpoints": [
+                    {
+                        "name": "simple-app-frontend-azurefd-net",
+                        "properties": {
+                            "hostName": "simple-app-frontend.azurefd.net",
+                            "sessionAffinityEnabledState": "Disabled",
+                            "sessionAffinityTtlSeconds": 0,
+                            "webApplicationFirewallPolicyLink": null,
+                            "customHttpsConfiguration": null
+                        },
+                        "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/frontendEndpoints/simple-app-frontend-azurefd-net"
+                    }
+                ],
+                "backendPools": [
+                    {
+                        "name": "simpleBackendPool",
+                        "properties": {
+                            "backends": [
+                                {
+                                    "address": "simple-web-app-1.azurewebsites.net",
+                                    "privateLinkResourceId": null,
+                                    "privateLinkLocation": null,
+                                    "privateEndpointStatus": null,
+                                    "privateLinkApprovalMessage": null,
+                                    "enabledState": "Enabled",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 1,
+                                    "weight": 50,
+                                    "backendHostHeader": "simple-web-app-1.azurewebsites.net"
+                                },
+                                {
+                                    "address": "simple-web-app-2.azurewebsites.net",
+                                    "privateLinkResourceId": null,
+                                    "privateLinkLocation": null,
+                                    "privateEndpointStatus": null,
+                                    "privateLinkApprovalMessage": null,
+                                    "enabledState": "Enabled",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 1,
+                                    "weight": 50,
+                                    "backendHostHeader": "simple-web-app-2.azurewebsites.net"
+                                }
+                            ],
+                            "loadBalancingSettings": {
+                                "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/loadBalancingSettings/loadBalancingSettings-1597135899898"
+                            },
+                            "healthProbeSettings": {
+                                "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/healthProbeSettings/healthProbeSettings-1597135899898"
+                            }
+                        },
+                        "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/backendPools/simpleBackendPool"
+                    }
+                ],
+                "routingRules": [
+                    {
+                        "name": "simpleAppRule",
+                        "properties": {
+                            "frontendEndpoints": [
+                                {
+                                    "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/frontendEndpoints/simple-app-frontend-azurefd-net"
+                                }
+                            ],
+                            "acceptedProtocols": [
+                                "Http",
+                                "Https"
+                            ],
+                            "patternsToMatch": [
+                                "/*"
+                            ],
+                            "enabledState": "Enabled",
+                            "routeConfiguration": {
+                                "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration",
+                                "customForwardingPath": null,
+                                "forwardingProtocol": "HttpsOnly",
+                                "backendPool": {
+                                    "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/backendPools/simpleBackendPool"
+                                },
+                                "cacheConfiguration": null
+                            }
+                        },
+                        "id": "/subscriptions/dc40881e-ee4d-4d65-bb41-e02d5072ff36/resourceGroups/exam6/providers/Microsoft.Network/frontdoors/simple-app-frontend/routingRules/simpleAppRule"
+                    }
+                ],
+                "backendPoolsSettings": {
+                    "enforceCertificateNameCheck": "Enabled",
+                    "sendRecvTimeoutSeconds": 30
+                }
+            }
+        }
+    ]
+}

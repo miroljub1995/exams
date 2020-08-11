@@ -1,6 +1,6 @@
 Connect-AzAccount
 $rsaPath = "./id_rsa"
-Start-Process -FilePath "ssh-keygen" -ArgumentList @("-m", "PEM", "-t", "rsa", "-b", "4096", "-f", "id_rsa", "-P", "linux") -Wait # try @("a","b") to "a","b"
+Start-Process -FilePath "ssh-keygen" -ArgumentList @("-m", "PEM", "-t", "rsa", "-b", "4096", "-f", "id_rsa", "-P", "linux") -Wait
 $groupName = "vm-exam"
 $location = "Switzerland North"
 New-AzResourceGroup -Name $groupName -Location $location
@@ -98,4 +98,4 @@ $publicIp = (Get-AzPublicIpAddress -ResourceGroupName $groupName).IpAddress
 Start-Process -FilePath "ssh" -ArgumentList "-i","id_rsa","$($user)@$($publicIp)" -Wait
 
 # remove vm
-Remove-AzResourceGroup -Name $groupName
+#Remove-AzResourceGroup -Name $groupName
